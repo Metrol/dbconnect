@@ -66,9 +66,6 @@ class INI
             $this->setOptions($schema, $attributes);
 
             (new Connect($schema))->bankIt($connectionName);
-
-            echo $schema->getDSN().PHP_EOL;
-            var_dump($schema->getOptions());
         }
     }
 
