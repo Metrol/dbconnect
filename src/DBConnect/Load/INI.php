@@ -7,6 +7,7 @@
  */
 
 namespace Metrol\DBConnect\Load;
+
 use Metrol\DBConnect\Schema;
 use Metrol\DBConnect\Connect;
 
@@ -61,6 +62,12 @@ class INI
 
         foreach ( $parsed as $connectionName => $attributes )
         {
+            // Make sure the connection isn't already in the bank.
+            if ( Connect\Bank::get($connectionName) !== null )
+            {
+                continue;
+            }
+
             $schema = $this->getSchema($attributes);
             $this->setConnectionValues($schema, $attributes);
             $this->setOptions($schema, $attributes);
