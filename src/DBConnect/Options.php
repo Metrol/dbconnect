@@ -252,12 +252,12 @@ trait Options
      * Set a database driver specific conection option.  The option and an
      * allowed value must be set by the specific database connector.
      *
-     * @param integer $option Option to be set
-     * @param mixed   $value  Value to assign to that option
+     * @param string $option Option to be set
+     * @param mixed  $value  Value to assign to that option
      *
      * @return $this
      */
-    public function setDriverOption(int $option, mixed $value): static
+    public function setDriverOption(string $option, mixed $value): static
     {
         if ( $this->validateDriverOption($option, $value) )
         {
