@@ -7,24 +7,25 @@
  */
 
 namespace Metrol\DBConnect\Schema;
-use Metrol\DBConnect as dbc;
+
+use Metrol\DBConnect\{Schema, Credentials, Network, Options};
+use UnderflowException;
 
 /**
  * Connection information for a PostgreSQL database
  *
  */
-class PostgreSQL implements dbc\Schema
+class PostgreSQL implements Schema
 {
-    use dbc\Credentials;
-    use dbc\Network;
-    use dbc\Options;
+    use Credentials;
+    use Network;
+    use Options;
 
     const DB_TYPE = 'pgsql';
 
     /**
      * PostgreSQL specific connection attributes
      *
-     * @const
      */
     const CONNECT_TIMEOUT  = 'connect_timeout';
     const SSL_MODE         = 'sslmode';
@@ -34,7 +35,6 @@ class PostgreSQL implements dbc\Schema
     /**
      * SSL Modes
      *
-     * @const
      */
     const SSLMODE_DISABLE = 'disable';
     const SSLMODE_ALLOW   = 'allow';
@@ -44,9 +44,8 @@ class PostgreSQL implements dbc\Schema
     /**
      * Database name to connect to
      *
-     * @var string
      */
-    private $databaseName;
+    private string $databaseName = '';
 
     /**
      *
@@ -60,7 +59,7 @@ class PostgreSQL implements dbc\Schema
      * Initialize the allowed driver specific connection options
      *
      */
-    protected function initAllowedOptions()
+    protected function initAllowedOptions(): void
     {
         $this->allowedDriverOptions =
         [
@@ -93,40 +92,38 @@ class PostgreSQL implements dbc\Schema
     /**
      * Provide the DSN string that is fed into the PDO Constructor
      *
-     * @return string
-     *
-     * @throws \UnderflowException
+     * @throws UnderflowException
      */
-    public function getDSN()
+    public function getDSN(): string
     {
-        if ( $this->userName === null or $this->password === null )
+        if ( empty($this->userName) or empty($this->password) )
         {
-            $this->password = null;
-            throw new \UnderflowException(self::EX_MISSING_CREDENTIALS);
+            $this->password = '';
+            throw new UnderflowException(self::EX_MISSING_CREDENTIALS);
         }
 
-        if ( $this->databaseName === null )
+        if ( empty($this->databaseName) )
         {
-            $this->password = null;
-            throw new \UnderflowException(self::EX_DATABASE_NAME);
+            $this->password = '';
+            throw new UnderflowException(self::EX_DATABASE_NAME);
         }
 
         $connectParts = [];
 
-        $connectParts[] = 'dbname='.$this->databaseName;
+        $connectParts[] = 'dbname=' . $this->databaseName;
 
-        if ( $this->hostName !== null )
+        if ( ! empty($this->hostName) )
         {
-            $connectParts[] = 'host='.$this->hostName;
+            $connectParts[] = 'host=' . $this->hostName;
         }
 
-        if ( $this->port !== null )
+        if ( ! empty($this->port) )
         {
-            $connectParts[] = 'port='.$this->port;
+            $connectParts[] = 'port=' . $this->port;
         }
 
         // PostgreSQL puts the driver connection options into the connection
-        // string rather than passing an array into the options argument in the
+        // string rather than passing an array into the option argument in the
         // constructor.
         foreach ( $this->driverOptions as $option => $optionValue )
         {
@@ -142,11 +139,8 @@ class PostgreSQL implements dbc\Schema
     /**
      * Set the database name to talk to
      *
-     * @param string $databaseName
-     *
-     * @return $this
      */
-    public function setDatabaseName($databaseName)
+    public function setDatabaseName(string $databaseName): static
     {
         $this->databaseName = $databaseName;
 

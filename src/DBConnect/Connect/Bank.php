@@ -8,6 +8,8 @@
 
 namespace Metrol\DBConnect\Connect;
 
+use PDO;
+
 /**
  * Maintains a list of database connections stored by name
  *
@@ -19,9 +21,9 @@ class Bank
     /**
      * The list of Connect objects
      *
-     * @var \PDO[]
+     * @var PDO[]
      */
-    private static $connectSet = array();
+    private static array $connectSet = [];
 
     /**
      * Prevent this class from instantiating
@@ -35,10 +37,10 @@ class Bank
     /**
      * Add a named connection to the stack.
      *
-     * @param \PDO $conn
-     * @param string  $connectionName
+     * @param PDO    $conn
+     * @param string $connectionName
      */
-    public static function save(\PDO $conn, $connectionName = self::DEFAULT_NAME)
+    public static function save(PDO $conn, string $connectionName = self::DEFAULT_NAME): void
     {
         self::$connectSet[$connectionName] = $conn;
     }
@@ -48,9 +50,9 @@ class Bank
      *
      * @param string $connectionName
      *
-     * @return \PDO|null
+     * @return PDO|null
      */
-    public static function get($connectionName = self::DEFAULT_NAME)
+    public static function get(string $connectionName = self::DEFAULT_NAME): ?PDO
     {
         if ( isset(self::$connectSet[$connectionName]) )
         {
@@ -65,7 +67,7 @@ class Bank
      *
      * @param string $connectionName
      */
-    public static function disconnect($connectionName = self::DEFAULT_NAME)
+    public static function disconnect(string $connectionName = self::DEFAULT_NAME): void
     {
         if ( isset(self::$connectSet[$connectionName]) )
         {

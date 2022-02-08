@@ -16,22 +16,18 @@ trait Network
 {
     /**
      *
-     * @var string
      */
-    private $hostName;
+    private string $hostName = '';
 
     /**
      *
-     * @var integer
      */
-    private $port;
+    private int $port;
 
     /**
-     * @param string $hostName
      *
-     * @return $this
      */
-    public function setHost($hostName)
+    public function setHost(string $hostName): static
     {
         $this->hostName = $hostName;
 
@@ -39,21 +35,17 @@ trait Network
     }
 
     /**
-     * 
-     * @return string
+     *
      */
-    public function getHost()
+    public function getHost(): string
     {
         return $this->hostName;
     }
 
     /**
-     * 
-     * @param integer $port
      *
-     * @return $this
      */
-    public function setPort($port)
+    public function setPort(int $port): static
     {
         $this->port = $port;
 
@@ -62,9 +54,8 @@ trait Network
 
     /**
      *
-     * @return integer
      */
-    public function getPort()
+    public function getPort(): int
     {
         return $this->port;
     }

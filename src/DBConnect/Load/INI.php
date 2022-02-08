@@ -8,8 +8,8 @@
 
 namespace Metrol\DBConnect\Load;
 
-use Metrol\DBConnect\Schema;
-use Metrol\DBConnect\Connect;
+use Metrol\DBConnect\{Schema, Connect};
+use InvalidArgumentException;
 
 /**
  * Processes an INI file and creates connections for each specified
@@ -21,9 +21,8 @@ class INI
     /**
      * File name of the INI file with complete path
      *
-     * @var string
      */
-    protected $confFile;
+    protected string $confFile;
 
     /**
      * Defines the keys that should not be used as an option.  They are for any
@@ -31,14 +30,13 @@ class INI
      *
      * @var string[]
      */
-    protected $connectKeys;
+    protected array $connectKeys;
 
     /**
      * Store the file name and prep this object
      *
-     * @param string $configurationFilename
      */
-    public function __construct($configurationFilename)
+    public function __construct(string $configurationFilename)
     {
         $this->confFile = $configurationFilename;
         $this->initConnectKeys();
@@ -47,15 +45,13 @@ class INI
     /**
      * Process the configuration file and bank the connections
      *
-     * @return $this
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function run()
+    public function run(): static
     {
         if ( ! file_exists($this->confFile) )
         {
-            throw new \InvalidArgumentException('Specified configuration not found');
+            throw new InvalidArgumentException('Specified configuration not found');
         }
 
         $parsed = parse_ini_file($this->confFile, true);
@@ -74,18 +70,16 @@ class INI
 
             (new Connect($schema))->bankIt($connectionName);
         }
+
+        return $this;
     }
 
     /**
      * Fetch the appropriate schema from the Schema Factory
      *
-     * @param array $attributes
-     *
-     * @return Schema
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    protected function getSchema(array $attributes)
+    protected function getSchema(array $attributes): Schema
     {
         if ( isset($attributes['dbtype']) )
         {
@@ -93,7 +87,7 @@ class INI
         }
         else
         {
-            throw new \InvalidArgumentException('Unknown database type');
+            throw new InvalidArgumentException('Unknown database type');
         }
 
         return $schema;
@@ -103,10 +97,8 @@ class INI
      * Fills in connection options for the specified schema from the attributes
      * that came through
      *
-     * @param Schema $schema
-     * @param array  $attributes
      */
-    protected function setConnectionValues(Schema $schema, array $attributes)
+    protected function setConnectionValues(Schema $schema, array $attributes): void
     {
         if ( isset($attributes['host']) )
         {
@@ -138,10 +130,8 @@ class INI
      * Everything that isn't a connection key will attempt to be stored as a
      * connection option.
      *
-     * @param Schema $schema
-     * @param array  $attributes
      */
-    protected function setOptions(Schema $schema, array $attributes)
+    protected function setOptions(Schema $schema, array $attributes): void
     {
         foreach ( $attributes as $option => $value )
         {
@@ -159,7 +149,7 @@ class INI
      * a connection option.
      *
      */
-    private function initConnectKeys()
+    private function initConnectKeys(): void
     {
         $this->connectKeys = [
             'dbtype',

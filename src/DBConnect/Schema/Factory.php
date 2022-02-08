@@ -7,7 +7,9 @@
  */
 
 namespace Metrol\DBConnect\Schema;
-use Metrol\DBConnect as dbc;
+
+use Metrol\DBConnect\Schema;
+use InvalidArgumentException;
 
 /**
  * Provides the correct connection schema base on the DB type
@@ -26,28 +28,15 @@ class Factory
     /**
      * Provide the schema for the specified database type
      *
-     * @param string $dbType
-     *
-     * @return dbc\Schema
-     *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public static function getSchema($dbType)
+    public static function getSchema(string $dbType): Schema
     {
-        switch ( strtolower($dbType) )
+        return match (strtolower($dbType))
         {
-            case PostgreSQL::DB_TYPE:
-                $schema = new PostgreSQL;
-                break;
-
-            case MySQL::DB_TYPE:
-                $schema = new MySQL;
-                break;
-
-            default:
-                throw new \InvalidArgumentException('Unknown database type requested');
-        }
-
-        return $schema;
+            PostgreSQL::DB_TYPE => new PostgreSQL,
+            MySQL::DB_TYPE => new MySQL,
+            default => throw new InvalidArgumentException('Unknown database type requested'),
+        };
     }
 }

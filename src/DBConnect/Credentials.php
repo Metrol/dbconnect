@@ -17,27 +17,22 @@ namespace Metrol\DBConnect;
 trait Credentials
 {
     /**
-     * The user name credential for the connection
+     * The username credential for the connection
      *
-     * @var string
      */
-    private $userName;
+    private string $userName = '';
 
     /**
      * The password credential for the conenction
      *
-     * @var string
      */
-    private $password;
+    private string $password = '';
 
     /**
-     * Set the user name
+     * Set the username
      *
-     * @param string $userName
-     *
-     * @return $this
      */
-    public function setUserName($userName)
+    public function setUserName(string $userName): static
     {
         $this->userName = $userName;
 
@@ -45,11 +40,10 @@ trait Credentials
     }
 
     /**
-     * Get the user name credential for the connection
+     * Get the username credential for the connection
      *
-     * @return string
      */
-    public function getUserName()
+    public function getUserName(): string
     {
         return $this->userName;
     }
@@ -57,11 +51,8 @@ trait Credentials
     /**
      * Set the password for the connection
      *
-     * @param mixed $password
-     *
-     * @return $this
      */
-    public function setPassword($password)
+    public function setPassword(string $password): static
     {
         $this->password = $password;
 
@@ -71,9 +62,8 @@ trait Credentials
     /**
      * Provide the password for the connection
      *
-     * @return mixed
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }

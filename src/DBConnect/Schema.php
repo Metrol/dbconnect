@@ -22,26 +22,19 @@ interface Schema
     /**
      * Set the database name to talk to
      *
-     * @param string $databaseName
-     *
-     * @return $this
      */
-    public function setDatabaseName($databaseName);
+    public function setDatabaseName(string $databaseName): static;
 
     /**
-     * @param string $hostName
+     * Set the host name to connect to
      *
-     * @return $this
      */
-    public function setHost($hostName);
+    public function setHost(string $hostName): static;
 
     /**
      *
-     * @param integer $port
-     *
-     * @return $this
      */
-    public function setPort($port);
+    public function setPort(int $port): static;
 
     /**
      * Set a generic PDO conection option.  Must use the strings defined in the
@@ -51,52 +44,41 @@ interface Schema
      * request will automatically be passed to the setDriverOption() to see if
      * it will fit there.
      *
-     * @param string $option Which option to be set
-     * @param string $value  What value to assign to that option
-     *
-     * @return $this
+     * @param string $option Option to be set
+     * @param string $value  Value to assign to that option
      */
-    public function setOption($option, $value);
+    public function setOption(string $option, string $value): static;
 
     /**
-     * Set the user name
+     * Set the username
      *
-     * @param string $userName
-     *
-     * @return $this
      */
-    public function setUserName($userName);
+    public function setUserName(string $userName): static;
 
     /**
      * Set the password for the connection
      *
-     * @param mixed $password
-     *
-     * @return $this
      */
-    public function setPassword($password);
+    public function setPassword(string $password): static;
+
+    /**
+     * Provide the connection string to be passed into the PDO connection
+     *
+     */
+    public function getDSN(): string;
 
     /**
      *
-     * @return string
      */
-    public function getDSN();
+    public function getUserName(): string;
 
     /**
      *
-     * @return string
      */
-    public function getUserName();
+    public function getPassword(): string;
 
     /**
      *
-     * @return string
      */
-    public function getPassword();
-
-    /**
-     *
-     * @return array
-     */
-    public function getOptions();
+    public function getOptions(): array;
 }

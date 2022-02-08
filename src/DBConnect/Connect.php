@@ -8,6 +8,8 @@
 
 namespace Metrol\DBConnect;
 use Metrol\DBConnect\Connect\Bank;
+use PDO;
+use PDOException;
 
 /**
  * Accepts a database connection schema and then readily provides a PDO object
@@ -18,56 +20,51 @@ class Connect
     /**
      * Connection options to pass into the PDO constructor
      *
-     * @var Schema
      */
-    private $connectSchema;
+    private Schema $connectSchema;
 
     /**
      * Established PDO connection
      *
-     * @var \PDO
+     * @var PDO
      */
-    private $pdo;
+    private PDO $pdo;
 
     /**
-     * Set the database type and initialize the Connect object
+     * Set the database type and initialize
      *
      * @param Schema $connectSchema
      */
     public function __construct(Schema $connectSchema)
     {
-        $this->pdo           = null;
         $this->connectSchema = $connectSchema;
     }
 
     /**
      * Provide the PDO object that was created from the Schema passed in
      *
-     * @return \PDO
+     * @return PDO
      *
-     * @throws \PDOException Connection errors
+     * @throws PDOException Connection errors
      */
-    public function getConnection()
+    public function getConnection(): PDO
     {
-        if ( $this->pdo === null )
+        if ( ! isset($this->pdo) )
         {
-            $this->pdo = new \PDO($this->connectSchema->getDSN(),
-                                  $this->connectSchema->getUserName(),
-                                  $this->connectSchema->getPassword(),
-                                  $this->connectSchema->getOptions());
+            $this->pdo = new PDO($this->connectSchema->getDSN(),
+                                 $this->connectSchema->getUserName(),
+                                 $this->connectSchema->getPassword(),
+                                 $this->connectSchema->getOptions());
         }
 
         return $this->pdo;
     }
 
     /**
-     * Push the connection created here into the Connect bank.
+     * Push the connection created here into the bank
      *
-     * @param string $connectionName
-     *
-     * @return $this
      */
-    public function bankIt($connectionName = 'default')
+    public function bankIt(string $connectionName = 'default'): static
     {
         Bank::save($this->getConnection(), $connectionName);
 

@@ -8,6 +8,8 @@
 
 namespace Metrol\DBConnect;
 
+use PDO;
+
 /**
  * Provides some basic management for adding and fetching both PDO and driver
  * specific connection options
@@ -20,7 +22,7 @@ trait Options
      *
      * @var array
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Allowed generic options for the PDO connection along with their allowed
@@ -28,28 +30,28 @@ trait Options
      *
      * @var array
      */
-    protected $allowedOptions = [
+    protected array $allowedOptions = [
         // Force column names to a specific case.
         'columnCase' =>
         [
-            'value'   => \PDO::ATTR_CASE,
+            'value'   => PDO::ATTR_CASE,
             'options' =>
             [
-                'lower'   => \PDO::CASE_LOWER,   // Force column names to lower case.
-                'natural' => \PDO::CASE_NATURAL, // Leave column names as returned by the database driver.
-                'upper'   => \PDO::CASE_UPPER    // Force column names to upper case.
+                'lower'   => PDO::CASE_LOWER,   // Force column names to lower case.
+                'natural' => PDO::CASE_NATURAL, // Leave column names as returned by the database driver.
+                'upper'   => PDO::CASE_UPPER    // Force column names to upper case.
             ]
         ],
 
         // Error reporting
         'errorMode' =>
         [
-            'value'   => \PDO::ATTR_ERRMODE,
+            'value'   => PDO::ATTR_ERRMODE,
             'options' =>
             [
-                'silent'    => \PDO::ERRMODE_SILENT,   // Just set error codes.
-                'warning'   => \PDO::ERRMODE_WARNING,  // Raise E_WARNING.
-                'exception' => \PDO::ERRMODE_EXCEPTION // Throw execeptions.
+                'silent'    => PDO::ERRMODE_SILENT,   // Just set error codes.
+                'warning'   => PDO::ERRMODE_WARNING,  // Raise E_WARNING.
+                'exception' => PDO::ERRMODE_EXCEPTION // Throw execeptions.
             ]
         ],
 
@@ -57,19 +59,19 @@ trait Options
         // Conversion of NULL and empty strings.
         'nullConversion' =>
         [
-            'value' => \PDO::ATTR_ORACLE_NULLS,
+            'value' => PDO::ATTR_ORACLE_NULLS,
             'options' =>
             [
-                'natural'           => \PDO::NULL_NATURAL,      // No conversion.
-                'emptyStringToNull' => \PDO::NULL_EMPTY_STRING, // Empty string is converted to NULL.
-                'nullToString'      => \PDO::NULL_TO_STRING     // NULL is converted to an empty string.
+                'natural'           => PDO::NULL_NATURAL,      // No conversion.
+                'emptyStringToNull' => PDO::NULL_EMPTY_STRING, // Empty string is converted to NULL.
+                'nullToString'      => PDO::NULL_TO_STRING     // NULL is converted to an empty string.
             ]
         ],
 
         // Convert numeric values to strings when fetching.
         'stringify' =>
         [
-            'value' => \PDO::ATTR_STRINGIFY_FETCHES,
+            'value' => PDO::ATTR_STRINGIFY_FETCHES,
             'options' =>
             [
                 'true'  => true,
@@ -86,7 +88,7 @@ trait Options
         // current query.
         'emulatePrepare' =>
         [
-            'value' => \PDO::ATTR_EMULATE_PREPARES,
+            'value' => PDO::ATTR_EMULATE_PREPARES,
             'options' =>
             [
                 'true'  => true,
@@ -96,50 +98,50 @@ trait Options
 
         // Set default fetch mode.
         'fetchMode' => [
-            'value' =>\PDO::ATTR_DEFAULT_FETCH_MODE,
+            'value' => PDO::ATTR_DEFAULT_FETCH_MODE,
             'options' =>
             [
                 // Returns an array indexed by column name as returned in your
                 // result set.
-                'associated' => \PDO::FETCH_ASSOC,
+                'associated' => PDO::FETCH_ASSOC,
 
                 // (default): Returns an array indexed by both column name and
-                // 0-indexed column number as returned in your result set
-                'both' => \PDO::FETCH_BOTH,
+                // 0-indexed column number returned in your result set
+                'both' => PDO::FETCH_BOTH,
 
                 // Returns TRUE and assigns the values of the columns in your
                 // result set to the PHP variables to which they were bound with
                 // the PDOStatement::bindColumn() method.
-                'bound' => \PDO::FETCH_BOUND,
+                'bound' => PDO::FETCH_BOUND,
 
                 // Returns a new instance of the requested class, mapping the
                 // columns of the result set to named properties in the class. If
                 // fetch_style includes PDO::FETCH_CLASSTYPE
                 // (e.g. PDO::FETCH_CLASS | PDO::FETCH_CLASSTYPE) then the name of
                 // the class is determined from a value of the first column.
-                'class' => \PDO::FETCH_CLASS,
+                'class' => PDO::FETCH_CLASS,
 
                 // Updates an existing instance of the requested class, mapping the
                 // columns of the result set to named properties in the class.
-                'into' => \PDO::FETCH_INTO,
+                'into' => PDO::FETCH_INTO,
 
                 // Combines PDO::FETCH_BOTH and PDO::FETCH_OBJ, creating the object
                 // variable names as they are accessed.
-                'lazy' => \PDO::FETCH_LAZY,
+                'lazy' => PDO::FETCH_LAZY,
 
                 // Returns an array with the same form as PDO::FETCH_ASSOC, except
                 // that if there are multiple columns with the same name, the value
                 // referred to by that key will be an array of all the values in
                 // the row that had that column name.
-                'named' => \PDO::FETCH_NAMED,
+                'named' => PDO::FETCH_NAMED,
 
-                // Returns an array indexed by column number as returned in your
+                // Returns an array indexed by column number returned in your
                 // result set, starting at column 0.
-                'numbered' => \PDO::FETCH_NUM,
+                'numbered' => PDO::FETCH_NUM,
 
                 // Returns an anonymous object with property names that correspond
                 // to the column names returned in your result set.
-                'object' => \PDO::FETCH_OBJ
+                'object' => PDO::FETCH_OBJ
             ]
         ]
     ];
@@ -149,7 +151,7 @@ trait Options
      *
      * @var array
      */
-    protected $driverOptions = [];
+    protected array $driverOptions = [];
 
     /**
      * Allowed Database specific options.  Needs to be populated by the class
@@ -157,7 +159,7 @@ trait Options
      *
      * @var array
      */
-    protected $allowedDriverOptions = [];
+    protected array $allowedDriverOptions = [];
 
     /**
      * Set a generic PDO conection option.  Must use the strings defined in the
@@ -167,12 +169,10 @@ trait Options
      * request will automatically be passed to the setDriverOption() to see if
      * it will fit there.
      *
-     * @param string $option Which option to be set
-     * @param string $value  What value to assign to that option
-     *
-     * @return $this
+     * @param string $option Option to be set
+     * @param string $value  Value to assign to that option
      */
-    public function setOption($option, $value)
+    public function setOption(string $option, string $value): static
     {
         if ( $this->validateOption($option, $value) )
         {
@@ -192,7 +192,7 @@ trait Options
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -201,10 +201,8 @@ trait Options
      * Provide the PDO value of an option string
      *
      * @param string $option String in the allowed options array
-     *
-     * @return mixed|null The value that needs to be passed to PDO
      */
-    private function getOptionValue($option)
+    private function getOptionValue(string $option): mixed
     {
         $rtn = null;
 
@@ -224,7 +222,7 @@ trait Options
      *
      * @return boolean
      */
-    private function validateOption($option, $value)
+    private function validateOption(string $option, string $value): bool
     {
         $rtn = false;
 
@@ -254,12 +252,12 @@ trait Options
      * Set a database driver specific conection option.  The option and an
      * allowed value must be set by the specific database connector.
      *
-     * @param integer $option Which option to be set
-     * @param mixed   $value What value to assign to that option
+     * @param integer $option Option to be set
+     * @param mixed   $value  Value to assign to that option
      *
      * @return $this
      */
-    public function setDriverOption($option, $value)
+    public function setDriverOption(int $option, mixed $value): static
     {
         if ( $this->validateDriverOption($option, $value) )
         {
@@ -277,7 +275,7 @@ trait Options
      *
      * @return mixed|null The value that needs to be passed to PDO
      */
-    private function getOptionDriverValue($option)
+    private function getOptionDriverValue(string $option): mixed
     {
         $rtn = null;
 
@@ -298,7 +296,7 @@ trait Options
      *
      * @return boolean
      */
-    private function validateDriverOption($option, $value)
+    private function validateDriverOption(string $option, string $value): bool
     {
         $rtn = false;
 
