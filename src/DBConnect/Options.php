@@ -177,7 +177,7 @@ trait Options
         if ( $this->validateOption($option, $value) )
         {
             $optionValue = $this->getOptionValue($option);
-            $this->options[$optionValue] = $value;
+            $this->options[$optionValue] = $this->allowedOptions[$option]['options'][$value];
         }
         else
         {
@@ -231,7 +231,7 @@ trait Options
             // Only check for allowed options if any are specified
             if ( isset($this->allowedOptions[$option]['options']) )
             {
-                if ( in_array($value, $this->allowedOptions[$option]['options'] ) )
+                if ( array_key_exists($value, $this->allowedOptions[$option]['options'] ) )
                 {
                     // Specified allowed options, and the value is in there.
                     $rtn = true;
