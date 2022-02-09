@@ -124,6 +124,26 @@ class INI
         {
             $schema->setPassword($attributes['password']);
         }
+
+        if ( isset($attributes['sslMode']) )
+        {
+            $schema->setSslMode($attributes['sslMode']);
+        }
+
+        if ( isset($attributes['sslCert']) )
+        {
+            $schema->setSslCert($attributes['sslCert']);
+        }
+
+        if ( isset($attributes['sslKey']) )
+        {
+            $schema->setSslKey($attributes['sslKey']);
+        }
+
+        if ( isset($attributes['sslRootCert']) )
+        {
+            $schema->setSslRootCert($attributes['sslRootCert']);
+        }
     }
 
     /**
@@ -157,7 +177,11 @@ class INI
             'port',
             'dbname',
             'user',
-            'password'
+            'password',
+            'sslMode',
+            'sslCert',
+            'sslKey',
+            'sslRootCert'
         ];
     }
 }
