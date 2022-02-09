@@ -43,8 +43,6 @@ class Connect
     /**
      * Provide the PDO object that was created from the Schema passed in
      *
-     * @return PDO
-     *
      * @throws PDOException Connection errors
      */
     public function getConnection(): PDO
