@@ -17,6 +17,8 @@ interface Schema
     const EX_MISSING_CREDENTIALS = 'Missing connection credentials';
     const EX_DATABASE_NAME       = 'Must have a database name in order to connect';
 
+    const DEF_HOST = 'localhost';
+
     const DSN_DELIM = ';';
 
     /**
