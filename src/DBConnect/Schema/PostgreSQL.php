@@ -23,6 +23,8 @@ class PostgreSQL implements Schema
 
     const DB_TYPE = 'pgsql';
 
+    const DEFAULT_PORT = 5432;
+
     /**
      * PostgreSQL specific connection attributes
      *
@@ -53,6 +55,9 @@ class PostgreSQL implements Schema
     public function __construct()
     {
         $this->initAllowedOptions();
+        $this->port = self::DEFAULT_PORT;
+        $this->hostName = self::DEF_HOST;
+
     }
 
     /**
@@ -122,12 +127,32 @@ class PostgreSQL implements Schema
             $connectParts[] = 'port=' . $this->port;
         }
 
+        if ( ! empty($this->sslMode) )
+        {
+            $connectParts[] = 'sslmode=' . $this->sslMode;
+        }
+
+        if ( ! empty($this->sslCert) )
+        {
+            $connectParts[] = 'sslcert=' . $this->sslCert;
+        }
+
+        if ( ! empty($this->sslKey) )
+        {
+            $connectParts[] = 'sslkey=' . $this->sslKey;
+        }
+
+        if ( ! empty($this->sslRootCert) )
+        {
+            $connectParts[] = 'sslrootcert=' . $this->sslRootCert;
+        }
+
         // PostgreSQL puts the driver connection options into the connection
         // string rather than passing an array into the option argument in the
         // constructor.
         foreach ( $this->driverOptions as $option => $optionValue )
         {
-            $connectParts[] = $option .'='. $optionValue;
+            $connectParts[] = $option . '=' . $optionValue;
         }
 
         $connStr = self::DB_TYPE.':';
