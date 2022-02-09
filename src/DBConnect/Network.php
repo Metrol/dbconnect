@@ -24,6 +24,11 @@ trait Network
      */
     private int $port;
 
+    private string $sslMode = '';
+    private string $sslKey  = '';
+    private string $sslCert = '';
+    private string $sslRootCert = '';
+
     /**
      *
      */
@@ -55,8 +60,38 @@ trait Network
     /**
      *
      */
-    public function getPort(): int
+    public function setSslMode(string $sslMode): static
     {
-        return $this->port;
+        $this->sslMode = $sslMode;
+
+        return $this;
+    }
+
+    /**
+     */
+    public function setSslKey(string $sslKey): static
+    {
+        $this->sslKey = $sslKey;
+
+        return $this;
+    }
+
+    /**
+     */
+    public function setSslCert(string $sslCert): static
+    {
+        $this->sslCert = $sslCert;
+
+        return $this;
+    }
+
+
+    /**
+     */
+    public function setSslRootCert(string $sslRootCert): static
+    {
+        $this->sslRootCert = $sslRootCert;
+
+        return $this;
     }
 }
