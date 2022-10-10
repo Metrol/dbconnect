@@ -6,8 +6,11 @@
  * @copyright (c) 2022, Meeting Evolution
  */
 
+namespace Metrol\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Metrol\DBConnect\{Schema, Connect};
+use PDO;
 
 /**
  * Describe purpose of PostgreSQLTest
