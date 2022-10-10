@@ -17,9 +17,9 @@
         "symfony/var-dumper" : "5.*"
     },
 
-    "autoload": {
+    "autoload-dev": {
         "psr-4": {
-            "Metrol\\": "src/"
+            "Metrol\\Tests\\": "tests/"
         }
     }
 }
