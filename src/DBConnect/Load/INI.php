@@ -28,7 +28,6 @@ class INI
      * Defines the keys that should not be used as an option.  They are for any
      * connection.  For example, the host or database name.
      *
-     * @var string[]
      */
     protected array $connectKeys;
 

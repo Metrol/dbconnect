@@ -26,14 +26,12 @@ class Connect
     /**
      * Established PDO connection
      *
-     * @var PDO
      */
     private PDO $pdo;
 
     /**
      * Set the database type and initialize
      *
-     * @param Schema $connectSchema
      */
     public function __construct(Schema $connectSchema)
     {

@@ -23,7 +23,7 @@ trait Credentials
     private string $userName = '';
 
     /**
-     * The password credential for the conenction
+     * The password credential for the connection
      *
      */
     private string $password = '';

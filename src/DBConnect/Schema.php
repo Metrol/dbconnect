@@ -39,15 +39,13 @@ interface Schema
     public function setPort(int $port): static;
 
     /**
-     * Set a generic PDO conection option.  Must use the strings defined in the
+     * Set a generic PDO connection option.  Must use the strings defined in the
      * allowedOptions array in this trait.
      *
      * If the option can not be found in the regular allowed options, the
      * request will automatically be passed to the setDriverOption() to see if
      * it will fit there.
      *
-     * @param string $option Option to be set
-     * @param string $value  Value to assign to that option
      */
     public function setOption(string $option, string $value): static;
 

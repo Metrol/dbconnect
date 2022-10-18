@@ -20,7 +20,6 @@ trait Options
     /**
      * Options that are generic to all PDO database types.
      *
-     * @var array
      */
     protected array $options = [];
 
@@ -28,7 +27,6 @@ trait Options
      * Allowed generic options for the PDO connection along with their allowed
      * values.  If values are empty, then it's a free form input.
      *
-     * @var array
      */
     protected array $allowedOptions = [
         // Force column names to a specific case.
@@ -51,7 +49,7 @@ trait Options
             [
                 'silent'    => PDO::ERRMODE_SILENT,   // Just set error codes.
                 'warning'   => PDO::ERRMODE_WARNING,  // Raise E_WARNING.
-                'exception' => PDO::ERRMODE_EXCEPTION // Throw execeptions.
+                'exception' => PDO::ERRMODE_EXCEPTION // Throw exceptions.
             ]
         ],
 
@@ -149,7 +147,6 @@ trait Options
     /**
      * Database driver specific options
      *
-     * @var array
      */
     protected array $driverOptions = [];
 
@@ -157,7 +154,6 @@ trait Options
      * Allowed Database specific options.  Needs to be populated by the class
      * implementing this trait.
      *
-     * @var array
      */
     protected array $allowedDriverOptions = [];
 
@@ -169,8 +165,6 @@ trait Options
      * request will automatically be passed to the setDriverOption() to see if
      * it will fit there.
      *
-     * @param string $option Option to be set
-     * @param string $value  Value to assign to that option
      */
     public function setOption(string $option, string $value): static
     {
@@ -190,7 +184,6 @@ trait Options
     /**
      * Provide the options that have been set.
      *
-     * @return array
      */
     public function getOptions(): array
     {
@@ -200,7 +193,6 @@ trait Options
     /**
      * Provide the PDO value of an option string
      *
-     * @param string $option String in the allowed options array
      */
     private function getOptionValue(string $option): mixed
     {
@@ -217,10 +209,6 @@ trait Options
     /**
      * Checks to see if the option/value pair are valid.
      *
-     * @param string $option
-     * @param string $value
-     *
-     * @return boolean
      */
     private function validateOption(string $option, string $value): bool
     {
@@ -249,13 +237,9 @@ trait Options
     }
 
     /**
-     * Set a database driver specific conection option.  The option and an
+     * Set a database driver specific connection option.  The option and an
      * allowed value must be set by the specific database connector.
      *
-     * @param string $option Option to be set
-     * @param mixed  $value  Value to assign to that option
-     *
-     * @return $this
      */
     public function setDriverOption(string $option, mixed $value): static
     {
@@ -271,9 +255,6 @@ trait Options
     /**
      * Provide the PDO value of an option string for a driver specific option
      *
-     * @param string $option String in the allowed options array
-     *
-     * @return mixed|null The value that needs to be passed to PDO
      */
     private function getOptionDriverValue(string $option): mixed
     {
@@ -291,10 +272,6 @@ trait Options
      * Checks to see if the option/value pair are valid for a driver specific
      * option.
      *
-     * @param string $option
-     * @param string $value
-     *
-     * @return boolean
      */
     private function validateDriverOption(string $option, string $value): bool
     {

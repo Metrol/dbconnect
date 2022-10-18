@@ -37,8 +37,6 @@ class Bank
     /**
      * Add a named connection to the stack.
      *
-     * @param PDO    $conn
-     * @param string $connectionName
      */
     public static function save(PDO $conn, string $connectionName = self::DEFAULT_NAME): void
     {
@@ -48,9 +46,6 @@ class Bank
     /**
      * Provide a named connection from the stack
      *
-     * @param string $connectionName
-     *
-     * @return PDO|null
      */
     public static function get(string $connectionName = self::DEFAULT_NAME): ?PDO
     {
@@ -65,7 +60,6 @@ class Bank
     /**
      * Disconnect and remove an existing connection
      *
-     * @param string $connectionName
      */
     public static function disconnect(string $connectionName = self::DEFAULT_NAME): void
     {
