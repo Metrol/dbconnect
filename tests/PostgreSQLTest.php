@@ -18,11 +18,11 @@ use PDO;
  */
 class PostgreSQLTest extends TestCase
 {
-    const HOST = 'localhost';
-    const PORT = Schema\PostgreSQL::DEFAULT_PORT;
-    const DBNAME = 'MetrolTest';
-    const USER   = 'metrol';
-    const PASS   = 'metrolpass';
+    const HOST   = 'localhost';
+    const PORT   = Schema\PostgreSQL::DEFAULT_PORT;
+    const DBNAME = 'testdb';
+    const USER   = 'testuser';
+    const PASS   = 'testuserpass';
 
 
     public function testDsnString(): void
@@ -40,7 +40,7 @@ class PostgreSQLTest extends TestCase
                ->setPassword(self::PASS)
                ->setDatabaseName(self::DBNAME);
 
-        $this->assertEquals('pgsql:dbname=MetrolTest;host=localhost;port=5432',
+        $this->assertEquals('pgsql:dbname=testdb;host=localhost;port=5432',
                             $schema->getDSN());
     }
 
@@ -89,7 +89,7 @@ class PostgreSQLTest extends TestCase
             ->setSslCert('cert.pem')
             ->setSslRootCert('root.pem');
 
-        $expected = 'pgsql:dbname=MetrolTest;host=localhost;port=5432;'
+        $expected = 'pgsql:dbname=testdb;host=localhost;port=5432;'
             .'sslmode=required;sslcert=cert.pem;sslkey=key.pem;sslrootcert=root.pem';
 
         $this->assertEquals($expected, $schema->getDSN());
