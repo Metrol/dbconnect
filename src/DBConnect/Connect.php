@@ -7,6 +7,8 @@
  */
 
 namespace Metrol\DBConnect;
+
+use Metrol\DBConnect;
 use Metrol\DBConnect\Connect\Bank;
 use PDO;
 use PDOException;
@@ -15,7 +17,7 @@ use PDOException;
  * Accepts a database connection schema and then readily provides a PDO object
  *
  */
-class Connect
+class Connect implements DBConnect
 {
     /**
      * Connection options to pass into the PDO constructor
